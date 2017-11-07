@@ -1,0 +1,22 @@
+html,
+body {
+  margin: 0px;
+  padding: 0px;
+}
+
+li {
+  list-style: none;
+}
+
+#navBar{
+  width: 20vw;
+  height: 100vh;
+  float: left;
+  border-right: 0.5px solid black;
+}
+
+#input-id{
+  width: 10vw;
+  height: 10vh;
+  border-color: red
+}
