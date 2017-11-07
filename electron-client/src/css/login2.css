@@ -4,6 +4,10 @@ body {
     padding: 0;
     width: 100%;
     height: 100%;
+    -webkit-user-select: none;  
+    -moz-user-select: none;    
+    -ms-user-select: none;      
+    user-select: none;
 }
 
 * {
@@ -22,7 +26,8 @@ body {
     margin-top: 35%;
     font-family: Helvetica, sans-serif;
     font-weight: normal;
-    color: darkgray
+    color: darkgray;
+    cursor: default;
 }
 
 #app>#form {

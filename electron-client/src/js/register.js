@@ -1,7 +1,9 @@
-function emailValidation() {
-    const email = document.getElementById("email").value;
+let emailValidated = false;
 
-    document.getElementById("email").style.borderColor = "";
+function emailValidation() {
+    emailValidated = false;
+    const email = document.getElementById("email").value;
+    document.getElementById("email").style.border = "";
     document.getElementById("validEmailNotice").style.display = "none";
     document.getElementById("invalidEmailNotice").style.display = "none";
 
@@ -21,13 +23,28 @@ function emailValidationFromServer() {
                 "url": "http://localhost:5000/email/validation/" + email
             })
             .then(response => {
-                document.getElementById("email").style.borderColor = "#00ff00";
+                document.getElementById("email").style.border = "1px solid #00ff00";
                 document.getElementById("validEmailNotice").style.display = "inline-block";
+                emailValidated = true;
             })
             .catch(response => {
                 console.log(response);
-                document.getElementById("email").style.borderColor = "#ff0000";
+                document.getElementById("email").style.border = "1px solid #ff0000";
                 document.getElementById("invalidEmailNotice").style.display = "inline-block";
+                emailValidated = false;
             })
     }
+}
+
+function register(){
+    if(!emailValidated){
+        alert("빠짐없이 올바르게 입력해주세요.")
+        return;
+    }
+    
+}
+
+function exit(){
+    let electron = require('electron');
+    electron.remote.getCurrentWindow().close();
 }

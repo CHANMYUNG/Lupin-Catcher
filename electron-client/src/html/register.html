@@ -7,6 +7,9 @@
 </head>
 
 <body>
+    <div id="exit">
+        <div id="exit-X" onclick="exit();">X</div>
+    </div>
     <div id="app">
         <h1>회원가입</h1>
         <div id="left">
@@ -28,7 +31,11 @@
             </div>
         </div>
         <div id="buttons">
-            <button id="registerBtn" onclick="register();">회원가입</button>
+            <div id="registerBtn" onclick="register();">
+                <div id="registerBtnText">
+                    회원가입
+                </div>
+            </div>
         </div>
     </div>
 </body>
