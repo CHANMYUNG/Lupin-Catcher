@@ -15,13 +15,13 @@
         <div id="left">
             <label for="email">이메일 입력</label>
             <input type="email" id="email" placeholder="이메일을 입력해주세요" oninput="emailValidation();">
-            <span id="invalidEmailNotice">이미 존재하는 이메일입니다.</span>
-            <span id="validEmailNotice">사용 가능한 이메일입니다.</span>
-            <span id="illegalEmailNotice">이메일 형식이 맞지 않습니다.</span>
+            <span id="emailNotice"></span>
             <label for="password">비밀번호 입력</label>
-            <input type="password" id="password" placeholder="비밀번호를 입력해주세요">
+            <input type="password" class="passwordFields" id="password" placeholder="비밀번호를 입력해주세요" oninput="passwordValidation();">
+            <span id="passwordNotice"></span>
             <label for="re_password">비밀번호 재입력</label>
-            <input type="password" id="re_password" placeholder="비밀번호를 재입력해주세요">
+            <input type="password" class="passwordFields" id="re_password" placeholder="비밀번호를 재입력해주세요" oninput="passwordMatch();">
+            <span id="rePasswordNotice"></span>
             <label for="nickname">닉네임 입력</label>
             <input type="text" id="nickname" placeholder="닉네임을 입력해주세요">
         </div>

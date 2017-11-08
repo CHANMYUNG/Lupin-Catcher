@@ -16,7 +16,7 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1280,
     height: 768,
-    titleBarStyle: "hidden",
+    // titleBarStyle: "hidden",
     resizable: false,
     backgroundColor: "#ffffff",
     show: false
@@ -29,7 +29,7 @@ function createWindow() {
     slashes: true
   }))
 
-  mainWindow.once('ready-to-show', ()=>{
+  mainWindow.once('ready-to-show', () => {
     mainWindow.show();
   })
   //mainWindow.webContents.openDevTools()
