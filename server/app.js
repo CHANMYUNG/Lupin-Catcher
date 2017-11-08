@@ -4,8 +4,11 @@ const server = require('http').createServer(app);
 const session = require('express-session');
 const database = require('./database');
 const bodyParser = require('body-parser');
+const morgan = require('morgan');
 
 let io = require('socket.io')(server);
+
+app.use(morgan('dev'));
 
 app.route('/room').get((req, res) => {
     res.sendFile(__dirname + '/public/html/index.html');

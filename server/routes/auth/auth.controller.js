@@ -8,7 +8,7 @@ exports.localAuth = (req, res) => {
             "message": err.message
         });
         else if (!user)
-            res.sendStatus(400)
+            res.sendStatus(401)
         else req.logIn(user, (err) => {
             if (err) res.status(500).json({
                 "message": "Failed to serializing"
