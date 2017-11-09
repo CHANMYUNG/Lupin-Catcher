@@ -23,11 +23,7 @@ function createWindow() {
   })
   console.log(path.join(__dirname, '/src/html/index.html'));
   // and load the index.html of the app.
-  mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, '/src/html/login2.html'),
-    protocol: 'file:',
-    slashes: true
-  }))
+  mainWindow.loadURL('http://localhost:5000/public/html/login2.html');
 
   mainWindow.once('ready-to-show', () => {
     mainWindow.show();

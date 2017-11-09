@@ -10,10 +10,18 @@ exports.localAuth = (req, res) => {
         else if (!user)
             res.sendStatus(401)
         else req.logIn(user, (err) => {
-            if (err) res.status(500).json({
-                "message": "Failed to serializing"
-            })
-            else res.sendStatus(200);
+            if (err) {
+
+                res.status(500).json({
+                    "message": "Failed to serializing"
+                })
+            } else {
+                res.cookie('lupinCatcherSessionId', user, {
+                    expires: new Date(Date.now() + 900000),
+                    httpOnly: false
+                });
+                res.sendStatus(200);
+            }
         });
     })(req, res);
 };

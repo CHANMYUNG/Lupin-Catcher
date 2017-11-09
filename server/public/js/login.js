@@ -9,13 +9,18 @@ function login() {
 
     axios({
             "method": "POST",
-            "url": "http://localhost:5000/auth/local",
+            "url": "/api/auth/local",
             "data": {
                 "email": email,
                 "password": password
             }
         })
         .then(response => {
+            dialog.showMessageBox({
+                "type": "error",
+                "title": "로그인 실패",
+                "message": document.cookie
+            })
             location.href = "../html/main.html";
         })
         .catch(err => {
@@ -27,6 +32,8 @@ function login() {
                     "title": "로그인 실패",
                     "message": "아이디 혹은 비밀번호를 틀렸습니다."
                 })
+            } else {
+                console.log(err.response);
             }
         })
 }
