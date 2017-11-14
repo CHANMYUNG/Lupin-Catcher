@@ -36,13 +36,13 @@ passport();
 io.use(sharedSession(session, cookieParser()));
 
 io.on("connection", function (socket) {
-    console.log(socket.handshake.headers);
+    console.log(socket.handshake.session);
     socket.on('login', function (sessionId) {
-        console.log(socket.handshake.headers);
-        socket.handshake.session.userdata = userdata;
+        console.log(sessionId);
+        socket.handshake.session.sessionId = sessionId;
         socket.handshake.session.save();
         console.log("asdasd");
-        console.log(userdata);
+        // console.log(userdata);
         socket.emit('logged_in', socket.handshake.session);
     })
 

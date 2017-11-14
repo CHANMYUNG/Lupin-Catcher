@@ -2,6 +2,8 @@ html,
 body {
   margin: 0px;
   padding: 0px;
+  width: 100%;
+  height: 100%;
 }
 
 li {
@@ -10,7 +12,7 @@ li {
 
 #navBar{
   width: 20vw;
-  height: 100vh;
+  height: 100%;
   float: left;
   border-right: 0.5px solid black;
 }

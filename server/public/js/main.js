@@ -4,13 +4,6 @@ socket.on('connect', () => {
     socket.emit('login', getCookie('lupinCatcherSessionId'));
 })
 
-console.log(document.cookie);
-socket.on('logged_in', function (data) {
-    console.log(data);
-})
-
-
-
 function getCookie(cname) {
     var name = cname + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
