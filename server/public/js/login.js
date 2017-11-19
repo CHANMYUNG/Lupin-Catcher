@@ -49,19 +49,11 @@ function openRegister() {
         modal: true,
         backgroundColor: "#ffffff"
     })
-    child.loadURL(url.format({
-        pathname: path.join(__dirname, '../html/register.html'),
-        protocol: 'file:',
-        slashes: true
-    }))
+    child.loadURL('http://localhost:5000/public/html/register.html')
     child.once('ready-to-show', () => {
         child.show();
     })
     child.on('registered', () => {
-        top.loadURL(url.format({
-            pathname: path.join(__dirname, '../html/main.html'),
-            protocol: 'file:',
-            slashes: true
-        }));
+        top.loadURL('http://localhost:5000/public/html/main.html');
     })
 }

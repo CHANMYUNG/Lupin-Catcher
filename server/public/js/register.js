@@ -28,7 +28,7 @@ function emailValidationFromServer() {
     if (/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)) {
         axios({
                 "method": "GET",
-                "url": "http://localhost:5000/email/validation/" + email
+                "url": "http://localhost:5000/api/email/validation/" + email
             })
             .then(response => {
                 setBorderColor(document.getElementById("email"), "#00ff00");
@@ -168,7 +168,7 @@ function register() {
 
     axios({
             "method": "POST",
-            "url": "http://localhost:5000/auth/signup",
+            "url": "http://localhost:5000/api/auth/signup",
             "data": {
                 "email": email,
                 "password": password,
