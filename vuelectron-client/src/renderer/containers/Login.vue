@@ -70,12 +70,19 @@ export default {
         modal: true,
         backgroundColor: '#ffffff'
       })
-      child.loadURL('http://localhost:5000/public/html/register.html')
+      const registerURL = process.env.NODE_ENV === 'development'
+        ? `http://localhost:9080/#/register`
+        : `file://${__dirname}/../main/index.html#register`
+
+      const mainURL = process.env.NODE_ENV === 'development'
+        ? `http://localhost:9080/`
+        : `file://${__dirname}/../main/index.html`
+      child.loadURL(registerURL)
       child.once('ready-to-show', () => {
         child.show()
       })
       child.on('registered', () => {
-        top.loadURL('http://localhost:5000/public/html/main.html')
+        top.loadURL(mainURL)
       })
     }
   }

@@ -59,6 +59,15 @@ export default {
         console.log(response)
       })
     }
+  },
+  beforeCreate: function () {
+    this.$electron.remote.session.defaultSession.cookies.get({
+      domain: 'localhost',
+      name: 'lupin-catcher-session-id'
+    }, (error, cookies) => {
+      if (error) console.log(error)
+      else if (cookies.length === 0) location.href = '/#/login'
+    })
   }
 }
 </script>
