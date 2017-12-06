@@ -32,19 +32,36 @@ export default {
       const dialog = this.$electron.remote.dialog
       this.$http({
         method: 'POST',
-        url: '/api/auth/local',
+        url: this.API_BASE_URL + '/api/auth/local',
         data: {
-          email: email,
-          password: password
+          email,
+          password
+        },
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': ['POST']
         }
       })
         .then(response => {
-          dialog.showMessageBox({
-            type: 'error',
-            title: '로그인 실패',
-            message: document.cookie
+          console.log(response)
+          const refreshToken = response.data.refreshToken
+          const token = response.data.token
+          console.log(refreshToken)
+          console.log(token)
+          console.log(new Date(Date.now + 10 * 60 * 1000))
+          this.$electron.remote.session.defaultSession.cookies.set({
+            url: this.API_BASE_URL,
+            path: '/',
+            name: 'lupin-catcher-session-id',
+            value: token,
+            httpOnly: true,
+            expirationDate: new Date(new Date().getTime() + 10 * 60 * 1000).getTime()
+          }, (err) => {
+            if (err) console.log(err)
+            else {
+              location.href = '/#/main'
+            }
           })
-          location.href = '../html/main.html'
         })
         .catch(err => {
           if (!err.response) {

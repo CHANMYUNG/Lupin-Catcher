@@ -31,7 +31,7 @@ export default {
       console.log(webContents)
       session.defaultSession.cookies.flushStore(() => console.log('dasdas'))
       session.defaultSession.cookies.get({
-        domain: 'localhost',
+        domain: this.API_BASE_URL,
         name: 'lupin-catcher-session-id'
       }, (error, cookies) => {
         if (cookies.length === 0) location.href = '/login'
@@ -40,17 +40,17 @@ export default {
     },
     addCookie: function () {
       this.$electron.remote.session.defaultSession.cookies.set({
-        url: 'http://localhost:5000',
+        url: this.API_BASE_URL,
         path: '/',
         name: 'lupin-catcher-session-id',
         value: 'adasdasdasdasdasd',
         httpOnly: true,
-        expirationDate: '2017-11-30 23:23:23'
+        expirationDate: '2017-12-31 23:23:23'
       }, function (err) {
         console.log(err)
       })
       this.$http({
-        url: 'http://localhost:5000/api/sss',
+        url: this.API_BASE_URL + '/api/sss',
         method: 'GET',
         withCredentials: true
       }).then(response => {
@@ -61,10 +61,12 @@ export default {
     }
   },
   beforeCreate: function () {
+    console.log('[beforeCreate] main')
     this.$electron.remote.session.defaultSession.cookies.get({
-      domain: 'localhost',
+      domain: this.COOKIE_DOMAIN,
       name: 'lupin-catcher-session-id'
     }, (error, cookies) => {
+      console.log(cookies.length)
       if (error) console.log(error)
       else if (cookies.length === 0) location.href = '/#/login'
     })
