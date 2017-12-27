@@ -12,7 +12,7 @@ if (process.env.NODE_ENV !== 'development') {
 
 let mainWindow
 const winURL = process.env.NODE_ENV === 'development'
-  ? `http://localhost:9080/#/login`
+  ? `http://localhost:9080/#/main`
   : `file://${__dirname}/index.html#main`
 
 function createWindow () {

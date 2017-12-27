@@ -1,10 +1,8 @@
 <template>
   <div id="app">
-    <ChannelNav :name="name"/>
+    <ChannelNav :data="a"/>
     <MenuNav />
     <div id="contentSpace">1231231
-      <button v-on:click="showCookie()">dadsad</button><br>
-      <button v-on:click="addCookie()">addCookie</button>
     </div>
   </div>
 </template>
@@ -19,57 +17,90 @@ export default {
     ChannelNav,
     MenuNav
   },
+  mounted: async function () {
+    try {
+      const response = await this.$http({
+        url: this.$API_BASE_URL + '/api/user/info',
+        method: 'GET',
+        withCredentials: true,
+        headers: {
+          'Access-Control-Allow-Origin': this.$API_BASE_URL,
+          'Access-Control-Allow-Credentials': true
+        }
+      })
+      console.log(response)
+      this.a.name = response.data.nickname
+    } catch (e) {
+      console.log(e)
+    }
+  },
   data: function () {
+    console.log('call data')
+    console.log(this.$API_BASE_URL)
     return {
-      name: 'Terry Yun'
+      a: {
+        name: ''
+      }
     }
   },
   methods: {
-    showCookie: function () {
-      const session = this.$electron.remote.session
-      const webContents = this.$electron.remote.webContents
-      console.log(webContents)
-      session.defaultSession.cookies.flushStore(() => console.log('dasdas'))
-      session.defaultSession.cookies.get({
-        domain: this.API_BASE_URL,
-        name: 'lupin-catcher-session-id'
-      }, (error, cookies) => {
-        if (cookies.length === 0) location.href = '/login'
-        console.log(error, cookies)
-      })
-    },
-    addCookie: function () {
-      this.$electron.remote.session.defaultSession.cookies.set({
-        url: this.API_BASE_URL,
-        path: '/',
-        name: 'lupin-catcher-session-id',
-        value: 'adasdasdasdasdasd',
-        httpOnly: true,
-        expirationDate: '2017-12-31 23:23:23'
-      }, function (err) {
-        console.log(err)
-      })
-      this.$http({
-        url: this.API_BASE_URL + '/api/sss',
-        method: 'GET',
-        withCredentials: true
-      }).then(response => {
-        console.log(response)
-      }).catch(response => {
-        console.log(response)
-      })
-    }
   },
-  beforeCreate: function () {
+  beforeCreate () {
     console.log('[beforeCreate] main')
+    const dialog = this.$electron.remote.dialog
     this.$electron.remote.session.defaultSession.cookies.get({
-      domain: this.COOKIE_DOMAIN,
+      domain: this.$COOKIE_DOMAIN,
       name: 'lupin-catcher-session-id'
     }, (error, cookies) => {
       console.log(cookies.length)
       if (error) console.log(error)
-      else if (cookies.length === 0) location.href = '/#/login'
+      else if (cookies.length === 0) {
+        this.$storage.get('refreshToken', (error, refToken) => {
+          console.log(refToken)
+          if (error) {
+            console.log(error)
+            dialog.showMessageBox({
+              'type': 'info',
+              'title': '띠용?',
+              'message': '예기치 못한 오류입니다. 다시 한 번 로그인해주세요.'
+            })
+            location.href = '/#/login'
+          } else if (refToken.value) {
+            this.$http({
+              url: this.$API_BASE_URL + `/api/token?refreshToken=${refToken.value}`,
+              method: 'GET'
+            }).then(response => {
+              this.$electron.remote.session.defaultSession.cookies.set({
+                url: this.$API_BASE_URL,
+                path: '/',
+                name: 'lupin-catcher-session-id',
+                value: response.data.token,
+                httpOnly: true,
+                expirationDate: Math.floor(new Date(new Date().getTime() + (10 * 60 * 1000)).getTime() / 1000)
+              }, (err) => {
+                if (err) console.log(err)
+              })
+              console.log('세팅완료')
+            }).catch(err => {
+              if (!err.response) {
+                console.log(err)
+                dialog.showErrorBox('네트워크 오류!', '뭔가 문제가 발생헀어요!')
+              } else if (err.response.status === 204) {
+                dialog.showMessageBox({
+                  type: 'error',
+                  title: '로그인 실패',
+                  message: '로그인이 만료되었습니다. 다시 로그인해주세요.'
+                })
+                location.href = '/#/login'
+              }
+            })
+          } else {
+            location.href = '/#/login'
+          }
+        })
+      }
     })
+    console.log('[beforeCreate END] Main')
   }
 }
 </script>

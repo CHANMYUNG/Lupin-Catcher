@@ -2,7 +2,7 @@
   <nav id="channelNav">
       <div id="nameSpace">
         <img src="../assets/profile.png">
-        <span>{{ name }}</span>
+        <span >{{ data.name }}</span>
       </div>
       <div id="channelSpace">
         <div id="span_channels">CHANNELS</div>
@@ -21,7 +21,11 @@
 <script>
 export default {
   name: 'ChannelNav',
-  props: ['name']
+  props: ['data'],
+  mounted: function () {
+    console.log(this.data.name)
+    console.log('mounted!')
+  }
 }
 </script>
 

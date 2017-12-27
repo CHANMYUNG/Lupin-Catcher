@@ -5,7 +5,7 @@ import Login from '../containers/Login'
 import Register from '../containers/Register'
 Vue.use(Router)
 
-export default new Router({
+let router = new Router({
   routes: [{
     path: '/login',
     name: 'Login',
@@ -20,3 +20,9 @@ export default new Router({
     component: Register
   }]
 })
+
+router.beforeEach((to, from, next) => {
+  console.log(`======to======\n${to}`)
+  next()
+})
+export default router

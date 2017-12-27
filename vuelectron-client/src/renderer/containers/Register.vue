@@ -73,7 +73,7 @@ export default {
       if (/^(([^<>()[\]\\.,:\s@']+(\.[^<>()[\]\\.,:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)) {
         this.$http({
           method: 'GET',
-          url: this.API_BASE_URL + '/api/email/validation/' + email,
+          url: this.$API_BASE_URL + '/api/email/validation/' + email,
           headers: {
             'Access-Control-Allow-Origin': '*'
           }
@@ -134,7 +134,7 @@ export default {
       const nickname = document.getElementById('nickname').value
       if (this.passwordValidated === true && this.emailValidated === true && this.passwordMatches === true && this.nicknameInputed) {
         this.$http({
-          url: this.API_BASE_URL + '/api/auth/signup',
+          url: this.$API_BASE_URL + '/api/auth/signup',
           method: 'POST',
           data: {
             email,

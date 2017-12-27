@@ -17,7 +17,7 @@
         </div>
     </div>
     <div id='registerPart'>
-        <div id='register' v-on:click='openRegister()'>회원가입</a></div>
+        <div id='register' v-on:click='openRegister()'>회원가입</div>
     </div>
   </div>
 </template>
@@ -32,13 +32,13 @@ export default {
       const dialog = this.$electron.remote.dialog
       this.$http({
         method: 'POST',
-        url: this.API_BASE_URL + '/api/auth/local',
+        url: this.$API_BASE_URL + '/api/auth/local',
         data: {
           email,
           password
         },
         headers: {
-          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Origin': this.$API_BASE_URL,
           'Access-Control-Allow-Methods': ['POST']
         }
       })
@@ -48,14 +48,17 @@ export default {
           const token = response.data.token
           console.log(refreshToken)
           console.log(token)
-          console.log(new Date(Date.now + 10 * 60 * 1000))
+          console.log(new Date(Date.now + (10 * 60 * 1000)))
+          this.$storage.set('refreshToken', {
+            value: refreshToken
+          })
           this.$electron.remote.session.defaultSession.cookies.set({
-            url: this.API_BASE_URL,
+            url: this.$API_BASE_URL,
             path: '/',
             name: 'lupin-catcher-session-id',
             value: token,
             httpOnly: true,
-            expirationDate: new Date(new Date().getTime() + 10 * 60 * 1000).getTime()
+            expirationDate: Math.floor(new Date(new Date().getTime() + (10 * 60 * 1000)).getTime() / 1000)
           }, (err) => {
             if (err) console.log(err)
             else {
