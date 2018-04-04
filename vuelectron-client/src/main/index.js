@@ -12,7 +12,7 @@ if (process.env.NODE_ENV !== 'development') {
 
 let mainWindow
 const winURL = process.env.NODE_ENV === 'development'
-  ? `http://localhost:9080/#/main`
+  ? `http://localhost:9080/#/login`
   : `file://${__dirname}/index.html#main`
 
 function createWindow () {
@@ -21,7 +21,7 @@ function createWindow () {
    */
   mainWindow = new BrowserWindow({
     width: 1280,
-    height: 768,
+    height: 720,
     // titleBarStyle: "hidden",
     resizable: false,
     backgroundColor: '#ffffff',
