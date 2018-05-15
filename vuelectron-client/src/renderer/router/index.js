@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Register from '../containers/Register'
 import Login from '../containers/Login'
 import Main from '../containers/Main'
+
 Vue.use(Router)
 
 let router = new Router({
@@ -22,7 +23,6 @@ let router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  console.log(`======to======\n${to}`)
   next()
 })
 export default router

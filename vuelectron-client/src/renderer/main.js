@@ -14,7 +14,7 @@ Vue.prototype.$storage = require('electron-json-storage')
 Vue.use(VueSocketio, 'https://lupin-catcher-node-server.herokuapp.com')
 /* eslint-disable no-new */
 new Vue({
-  components: { App },
+  components: {App},
   router,
   store,
   template: '<App/>'
